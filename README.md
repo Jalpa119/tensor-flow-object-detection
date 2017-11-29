@@ -51,3 +51,42 @@ if we have more than one labels then we can continue assigning more ids with nam
 cd \tensorflow-object-detection\models\research\object_detection
 python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
 ```
+* Step 8 : for us, in the models/object_detection directory, there is a script that does this for us: export_inference_graph.py
+-> To run this, you just need to pass in your checkpoint and your pipeline config, then wherever you want the inference graph to be placed , In my Case the code is
+
+python export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path training/ssd_mobilenet_v1_pets.config \
+    --trained_checkpoint_prefix training/model.ckpt-1238\
+    --output_directory pizza_graph
+
+Run the above command in Model/Object_detection and then go to the pizza_graph directory and you will find new directory saved_model and most importantly, the forzen_inference_graph.pb file.
+
+* Step 9 : Go to Model/object_dection/jupyter notebook 
+Open the object_detection_tutorial.ipynb (in this we have to do some changes)
+
+# What model to download.
+MODEL_NAME = 'pizza_graph'
+
+
+# Path to frozen detection graph. This is the actual model that is used for the object detection.
+PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
+
+# List of the strings that is used to add correct label for each box.
+PATH_TO_LABELS = os.path.join('training', 'object-detection.pbtxt')
+
+NUM_CLASSES = 90
+
+--> In the Detection part make some changes in my case:
+# For the sake of simplicity we will use only 2 images:
+# image1.jpg
+# image2.jpg
+# If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
+PATH_TO_TEST_IMAGES_DIR = 'test_images'
+TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(3, 6) ]
+
+# Size, in inches, of the output images.
+IMAGE_SIZE = (12, 8)
+
+Step 10 : Run All code You will get your answer . 
+
