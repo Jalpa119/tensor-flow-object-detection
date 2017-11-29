@@ -78,7 +78,7 @@ PATH_TO_LABELS = os.path.join('training', 'object-detection.pbtxt')
 NUM_CLASSES = 90
 
 --> In the Detection part make some changes in my case:
-# For the sake of simplicity we will use only 2 images:
+# For the sake of simplicity we will use only 4 images:
 # image1.jpg
 # image2.jpg
 # If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
